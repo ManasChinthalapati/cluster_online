@@ -101,4 +101,4 @@ deck = pdk.Deck(
     map_style="https://basemaps.cartocdn.com/styles/positron/style.json"
 )
 
-st.pydeck_chart(deck)
+st.pydeck_chart(deck, use_container_width=True, height=700)
