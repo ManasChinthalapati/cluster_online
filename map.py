@@ -73,6 +73,8 @@ for name, cfg in layer_config.items():
                 filled=True,
                 stroked=True,
                 pickable=True,
+                auto_highlight=True,
+                highlight_color=[255, 255, 255, 180],
                 get_fill_color=cfg["color"],
                 get_line_color=cfg["line"],
                 line_width_min_pixels=2
