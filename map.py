@@ -5,7 +5,7 @@ import pydeck as pdk
 st.title("Display GPKG shapes in Streamlit (no Folium)")
 
 # Load data
-gdf = gpd.read_file("V1/clusters/AM_clusters.gpkg")
+gdf = gpd.read_file("AM_clusters.gpkg")
 
 # Convert to WGS84 for web display
 gdf = gdf.to_crs(4326)
@@ -32,7 +32,7 @@ layer1 = pdk.Layer(
 
 
 
-gdf = gpd.read_file("V1/clusters/CI_clusters.gpkg")
+gdf = gpd.read_file("CI_clusters.gpkg")
 
 # Convert to WGS84 for web display
 gdf = gdf.to_crs(4326)
@@ -58,7 +58,7 @@ layer2 = pdk.Layer(
 
 
 
-gdf = gpd.read_file("V1/clusters/DT_clusters.gpkg")
+gdf = gpd.read_file("DT_clusters.gpkg")
 
 # Convert to WGS84 for web display
 gdf = gdf.to_crs(4326)
@@ -83,7 +83,7 @@ layer3 = pdk.Layer(
 )
 
 
-gdf = gpd.read_file("V1/clusters/FS_clusters.gpkg")
+gdf = gpd.read_file("FS_clusters.gpkg")
 
 # Convert to WGS84 for web display
 gdf = gdf.to_crs(4326)
@@ -108,7 +108,7 @@ layer4 = pdk.Layer(
 )
 
 
-gdf = gpd.read_file("V1/clusters/LS_clusters.gpkg")
+gdf = gpd.read_file("LS_clusters.gpkg")
 
 # Convert to WGS84 for web display
 gdf = gdf.to_crs(4326)
@@ -133,7 +133,7 @@ layer5 = pdk.Layer(
 )
 
 
-gdf = gpd.read_file("V1/clusters/PBS_clusters.gpkg")
+gdf = gpd.read_file("PBS_clusters.gpkg")
 
 # Convert to WGS84 for web display
 gdf = gdf.to_crs(4326)
