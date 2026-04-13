@@ -1,179 +1,104 @@
 import streamlit as st
 import geopandas as gpd
 import pydeck as pdk
+from pathlib import Path
 
-st.title("Display GPKG shapes in Streamlit (no Folium)")
+st.title("Display GPKG shapes in Streamlit")
 
-# Load data
-gdf = gpd.read_file("AM_clusters.gpkg")
+# ----------------------------
+# Sidebar controls
+# ----------------------------
+st.sidebar.header("Layers")
 
-# Convert to WGS84 for web display
-gdf = gdf.to_crs(4326)
+layer_config = {
+    "Advanced Manufacturing": {
+        "file": "V1/clusters/AM_clusters.gpkg",
+        "color": [204, 153, 0, 60],
+        "line": [204, 153, 0, 255],
+        "key": "AM"
+    },
+    "Creative Industries": {
+        "file": "V1/clusters/CI_clusters.gpkg",
+        "color": [128, 0, 128, 60],
+        "line": [128, 0, 128, 255],
+        "key": "CI"
+    },
+    "Digital & Tech": {
+        "file": "V1/clusters/DT_clusters.gpkg",
+        "color": [0, 102, 204, 60],
+        "line": [0, 102, 204, 255],
+        "key": "DT"
+    },
+    "Financial Services": {
+        "file": "V1/clusters/FS_clusters.gpkg",
+        "color": [200, 30, 30, 60],
+        "line": [200, 30, 30, 255],
+        "key": "FS"
+    },
+    "Life Sciences": {
+        "file": "V1/clusters/LS_clusters.gpkg",
+        "color": [255, 140, 0, 60],
+        "line": [255, 140, 0, 255],
+        "key": "LS"
+    },
+    "Professional & Business Services": {
+        "file": "V1/clusters/PBS_clusters.gpkg",
+        "color": [160, 160, 160, 60],
+        "line": [160, 160, 160, 255],
+        "key": "PBS"
+    }
+}
 
-# Convert GeoDataFrame to GeoJSON
-geojson = gdf.__geo_interface__
+selected_layers = []
+layers = []
+centers = []
 
-# Compute map center
-center = [gdf.geometry.centroid.y.mean(), gdf.geometry.centroid.x.mean()]
+# ----------------------------
+# Load layers based on checkboxes
+# ----------------------------
+for name, cfg in layer_config.items():
+    if st.sidebar.checkbox(name, value=True, key=cfg["key"]):
+        gdf = gpd.read_file(Path(cfg["file"])).to_crs(4326)
+        geojson = gdf.__geo_interface__
 
-layer1 = pdk.Layer(
-    "GeoJsonLayer",
-    geojson,
-    filled=True,               # Set to True if you want filled polygons
-    stroked=True,
-    #extruded=True,
-    #get_elevation='properties.cluster_employees',
-    #elevation_scale=0.5,
-    get_fill_color=[204, 153, 0, 60],
-    get_line_color=[204, 153, 0, 255],
-    line_width_min_pixels=2
-)
+        centers.append([
+            gdf.geometry.centroid.y.mean(),
+            gdf.geometry.centroid.x.mean()
+        ])
 
+        layers.append(
+            pdk.Layer(
+                "GeoJsonLayer",
+                geojson,
+                filled=True,
+                stroked=True,
+                get_fill_color=cfg["color"],
+                get_line_color=cfg["line"],
+                line_width_min_pixels=2
+            )
+        )
 
-
-
-gdf = gpd.read_file("CI_clusters.gpkg")
-
-# Convert to WGS84 for web display
-gdf = gdf.to_crs(4326)
-
-# Convert GeoDataFrame to GeoJSON
-geojson = gdf.__geo_interface__
-
-# Compute map center
-center = [gdf.geometry.centroid.y.mean(), gdf.geometry.centroid.x.mean()]
-
-layer2 = pdk.Layer(
-    "GeoJsonLayer",
-    geojson,
-    filled=True,               # Set to True if you want filled polygons
-    stroked=True,
-    #extruded=True,
-    #get_elevation='properties.cluster_employees',
-    #elevation_scale=0.5,
-    get_fill_color=[128, 0, 128, 60],
-    get_line_color=[128, 0, 128, 255],
-    line_width_min_pixels=2
-)
-
-
-
-gdf = gpd.read_file("DT_clusters.gpkg")
-
-# Convert to WGS84 for web display
-gdf = gdf.to_crs(4326)
-
-# Convert GeoDataFrame to GeoJSON
-geojson = gdf.__geo_interface__
-
-# Compute map center
-center = [gdf.geometry.centroid.y.mean(), gdf.geometry.centroid.x.mean()]
-
-layer3 = pdk.Layer(
-    "GeoJsonLayer",
-    geojson,
-    filled=True,               # Set to True if you want filled polygons
-    stroked=True,
-    #extruded=True,
-    #get_elevation='properties.cluster_employees',
-    #elevation_scale=0.5,
-    get_fill_color=[0, 102, 204, 60],
-    get_line_color=[0, 102, 204, 255],
-    line_width_min_pixels=2
-)
-
-
-gdf = gpd.read_file("FS_clusters.gpkg")
-
-# Convert to WGS84 for web display
-gdf = gdf.to_crs(4326)
-
-# Convert GeoDataFrame to GeoJSON
-geojson = gdf.__geo_interface__
-
-# Compute map center
-center = [gdf.geometry.centroid.y.mean(), gdf.geometry.centroid.x.mean()]
-
-layer4 = pdk.Layer(
-    "GeoJsonLayer",
-    geojson,
-    filled=True,               # Set to True if you want filled polygons
-    stroked=True,
-    #extruded=True,
-    #get_elevation='properties.cluster_employees',
-    #elevation_scale=0.5,
-    get_fill_color=[200, 30, 30, 60],
-    get_line_color=[200, 30, 30, 255],
-    line_width_min_pixels=2
-)
-
-
-gdf = gpd.read_file("LS_clusters.gpkg")
-
-# Convert to WGS84 for web display
-gdf = gdf.to_crs(4326)
-
-# Convert GeoDataFrame to GeoJSON
-geojson = gdf.__geo_interface__
-
-# Compute map center
-center = [gdf.geometry.centroid.y.mean(), gdf.geometry.centroid.x.mean()]
-
-layer5 = pdk.Layer(
-    "GeoJsonLayer",
-    geojson,
-    filled=True,               # Set to True if you want filled polygons
-    stroked=True,
-    #extruded=True,
-    #get_elevation='properties.cluster_employees',
-    #elevation_scale=0.5,
-    get_fill_color=[255, 140, 0, 60],     # semi‑transparent
-    get_line_color=[255, 140, 0, 255],
-    line_width_min_pixels=2
-)
-
-
-gdf = gpd.read_file("PBS_clusters.gpkg")
-
-# Convert to WGS84 for web display
-gdf = gdf.to_crs(4326)
-
-# Convert GeoDataFrame to GeoJSON
-geojson = gdf.__geo_interface__
-
-# Compute map center
-center = [gdf.geometry.centroid.y.mean(), gdf.geometry.centroid.x.mean()]
-
-layer6 = pdk.Layer(
-    "GeoJsonLayer",
-    geojson,
-    filled=True,               # Set to True if you want filled polygons
-    stroked=True,
-    #extruded=True,
-    #get_elevation='properties.cluster_employees',
-    #elevation_scale=0.5,
-    get_fill_color=[160, 160, 160, 60],     # semi‑transparent
-    get_line_color=[160, 160, 160, 255],
-    line_width_min_pixels=2
-)
-
+# ----------------------------
+# Map view
+# ----------------------------
+if centers:
+    avg_lat = sum(c[0] for c in centers) / len(centers)
+    avg_lon = sum(c[1] for c in centers) / len(centers)
+else:
+    avg_lat, avg_lon = 54.5, -2.5  # fallback (UK centre)
 
 view_state = pdk.ViewState(
-    latitude=center[0],
-    longitude=center[1],
+    latitude=avg_lat,
+    longitude=avg_lon,
     zoom=6,
-    pitch=45,      # ✅ tilt camera to show 3D height
-    bearing=0
+    pitch=45,
 )
 
-# ✅ WORKS WITHOUT INTERNET – MapLibre basemap
 deck = pdk.Deck(
-    layers=[layer1, layer2, layer3, layer4, layer5, layer6],
+    layers=layers,
     initial_view_state=view_state,
     map_provider="maplibre",
     map_style="https://basemaps.cartocdn.com/styles/positron/style.json"
 )
 
-
 st.pydeck_chart(deck)
-#st.pydeck_chart(pdk.Deck(layers=[layer1, layer2, layer3, layer4], initial_view_state=view_state))
