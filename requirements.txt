@@ -2,5 +2,4 @@ streamlit
 geopandas
 pydeck
 shapely
-fiona
 pyproj
