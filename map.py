@@ -72,6 +72,7 @@ for name, cfg in layer_config.items():
                 geojson,
                 filled=True,
                 stroked=True,
+                pickable=True,
                 get_fill_color=cfg["color"],
                 get_line_color=cfg["line"],
                 line_width_min_pixels=2
@@ -87,6 +88,17 @@ if centers:
 else:
     avg_lat, avg_lon = 54.5, -2.5  # fallback (UK centre)
 
+tooltip = {
+    "html": """
+    <b>Turnover:</b> {cluster_turnover}<br/>
+    <b>Employees:</b> {cluster_employees}
+    """,
+    "style": {
+        "backgroundColor": "white",
+        "color": "black"
+    }
+}
+
 view_state = pdk.ViewState(
     latitude=avg_lat,
     longitude=avg_lon,
@@ -98,7 +110,8 @@ deck = pdk.Deck(
     layers=layers,
     initial_view_state=view_state,
     map_provider="maplibre",
-    map_style="https://basemaps.cartocdn.com/styles/positron/style.json"
+    map_style="https://basemaps.cartocdn.com/styles/positron/style.json",
+    tooltip=tooltip
 )
 
 st.pydeck_chart(deck, use_container_width=True, height=700)
