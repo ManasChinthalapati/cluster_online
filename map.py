@@ -12,37 +12,37 @@ st.sidebar.header("Layers")
 
 layer_config = {
     "Advanced Manufacturing": {
-        "file": "V1/clusters/AM_clusters.gpkg",
+        "file": "AM_clusters.gpkg",
         "color": [204, 153, 0, 60],
         "line": [204, 153, 0, 255],
         "key": "AM"
     },
     "Creative Industries": {
-        "file": "V1/clusters/CI_clusters.gpkg",
+        "file": "CI_clusters.gpkg",
         "color": [128, 0, 128, 60],
         "line": [128, 0, 128, 255],
         "key": "CI"
     },
     "Digital & Tech": {
-        "file": "V1/clusters/DT_clusters.gpkg",
+        "file": "DT_clusters.gpkg",
         "color": [0, 102, 204, 60],
         "line": [0, 102, 204, 255],
         "key": "DT"
     },
     "Financial Services": {
-        "file": "V1/clusters/FS_clusters.gpkg",
+        "file": "FS_clusters.gpkg",
         "color": [200, 30, 30, 60],
         "line": [200, 30, 30, 255],
         "key": "FS"
     },
     "Life Sciences": {
-        "file": "V1/clusters/LS_clusters.gpkg",
+        "file": "LS_clusters.gpkg",
         "color": [255, 140, 0, 60],
         "line": [255, 140, 0, 255],
         "key": "LS"
     },
     "Professional & Business Services": {
-        "file": "V1/clusters/PBS_clusters.gpkg",
+        "file": "PBS_clusters.gpkg",
         "color": [160, 160, 160, 60],
         "line": [160, 160, 160, 255],
         "key": "PBS"
